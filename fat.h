@@ -1,5 +1,5 @@
 #define BLOCSIZE 20
-#define BLOCNUM 6
+#define BLOCNUM 50
 #define NAMELEN 256
 
 typedef struct objet

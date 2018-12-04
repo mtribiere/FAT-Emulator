@@ -185,6 +185,51 @@ void supprimer_tout(){
   }
 }
 
+int lire_objet(struct objet *o,char **data){
+  int flag = 0;
+  //Verifier que il existe des fichier
+  if(obj == NULL || o == NULL)
+    flag = -1;
+
+  //Compter le nombre de block
+  if(flag != -1){
+    int blockTake = 1;
+    int currentFatIndex = o->index;
+
+    while(FAT[currentFatIndex] != 0xFFFE){
+      currentFatIndex = FAT[currentFatIndex];
+      blockTake++;
+    }
+
+    //Creer le buffer pour recevoir
+    char *retrived = malloc(sizeof(char)*(BLOCSIZE*blockTake));
+
+    //Recuperer les donnees
+    int currentDataFatIndex = 0;
+    int currentDataIndex = 0;
+    currentFatIndex = o->index;
+    char currentChar = ' ';
+
+    while(currentChar != '\0'){
+      currentChar = volume[BLOCSIZE*currentFatIndex + currentDataFatIndex];
+      retrived[currentDataIndex] = currentChar;
+      currentDataIndex++;
+      currentDataFatIndex++;
+
+      //Si on atteint la fin d'un block
+      if(currentDataFatIndex == BLOCSIZE){
+        currentFatIndex = FAT[currentFatIndex];
+        currentDataFatIndex = 0;
+      }
+    }
+
+    //Retourner la chaine
+    *data = retrived;
+  }
+
+  return flag;
+}
+
 /* DEBUG */
 void printBlock(int id){
   printf("Block %d : ",id);
