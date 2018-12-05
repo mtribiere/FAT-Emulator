@@ -59,7 +59,7 @@ struct objet *creer_objet(char *nom, unsigned short auteur,unsigned int taille, 
 
     //Copier data dans les block
     int currentDataBlockIndex = 0;
-    for(int dataIndex = 0;data[dataIndex] != '\0' ;dataIndex++){
+    for(int dataIndex = 0;dataIndex > 0 ? data[dataIndex-1] != '\0' : 1;dataIndex++){ //Ecrire le caractere sentinel
 
       //Si on arrive à la fin d'un block
       if(currentDataBlockIndex == BLOCSIZE){

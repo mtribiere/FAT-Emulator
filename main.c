@@ -13,6 +13,8 @@ int main(){
   creer_objet("fichier2",0,50,data);
   creer_objet("fichier3",1,50,data);
 
+  supprimer_tout();
+
   creer_objet("fichier4",2,50,otherData);
   creer_objet("fichier5",2,50,otherData);
 
